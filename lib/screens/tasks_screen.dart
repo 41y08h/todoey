@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/screens/add_task_screen.dart';
+import 'package:todoey/widgets/tasks_list.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -12,9 +14,21 @@ class _TasksScreenState extends State<TasksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         elevation: 0,
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => AddTaskScreen(),
+            enableDrag: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+          );
+        },
       ),
       backgroundColor: Colors.lightBlueAccent,
       body: Column(
@@ -37,8 +51,8 @@ class _TasksScreenState extends State<TasksScreen> {
                     size: 50,
                   ),
                 ),
-                SizedBox(height: 30),
-                Text(
+                const SizedBox(height: 30),
+                const Text(
                   "Todoey",
                   style: TextStyle(
                     color: Colors.white,
@@ -46,8 +60,8 @@ class _TasksScreenState extends State<TasksScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 2),
-                Text(
+                const SizedBox(height: 2),
+                const Text(
                   '12 Tasks',
                   style: TextStyle(
                     color: Colors.white,
@@ -57,12 +71,12 @@ class _TasksScreenState extends State<TasksScreen> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
@@ -72,7 +86,7 @@ class _TasksScreenState extends State<TasksScreen> {
               width: double.infinity,
               child: Column(
                 children: [
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Container(
                     height: 6,
                     width: 50,
@@ -81,6 +95,12 @@ class _TasksScreenState extends State<TasksScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  const Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: TasksList(),
+                    ),
+                  )
                 ],
               ),
             ),
