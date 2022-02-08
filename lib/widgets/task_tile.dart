@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 
 class TaskTile extends StatelessWidget {
-  const TaskTile({
-    Key? key,
-  }) : super(key: key);
+  final String name;
+  final bool isDone;
+  final Function(bool) onChange;
+  const TaskTile(
+      {Key? key,
+      required this.name,
+      this.isDone = true,
+      required this.onChange})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text('Buy Milk'),
+      title: Text(
+        name,
+        style: isDone
+            ? const TextStyle(decoration: TextDecoration.lineThrough)
+            : null,
+      ),
       trailing: Checkbox(
-        value: true,
-        onChanged: (bool? value) {},
+        value: isDone,
+        onChanged: (value) => {onChange(value ?? false)},
       ),
     );
   }

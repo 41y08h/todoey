@@ -10,13 +10,14 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Container(
+    return SingleChildScrollView(
+      padding: MediaQuery.of(context).viewInsets,
+      child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            const Text(
               'Add task',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -25,14 +26,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             TextField(
               autofocus: true,
               textAlign: TextAlign.center,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(8),
+                contentPadding: const EdgeInsets.all(8),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(8),
@@ -41,12 +42,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 filled: true,
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextButton(
               style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
                   primary: Colors.white,
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
@@ -56,7 +58,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     borderRadius: BorderRadius.circular(8),
                   )),
               onPressed: () {},
-              child: Text("Add"),
+              child: const Text("Add"),
             ),
           ],
         ),
