@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+  final Function(String name) onAdd;
+  const AddTaskScreen({Key? key, required this.onAdd}) : super(key: key);
 
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
+  String name = "";
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -41,23 +43,35 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 fillColor: Colors.grey.shade200,
                 filled: true,
               ),
+              onChanged: (String value) {
+                setState(() {
+                  name = value;
+                });
+              },
             ),
             const SizedBox(height: 12),
             TextButton(
               style: TextButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-                  primary: Colors.white,
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  backgroundColor: Colors.lightBlueAccent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  )),
-              onPressed: () {},
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+                backgroundColor: Colors.lightBlueAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ).copyWith(
+                foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) =>
+                      states.contains(MaterialState.disabled)
+                          ? Colors.white.withOpacity(0.5)
+                          : Colors.white,
+                ),
+              ),
+              onPressed: name != "" ? () => widget.onAdd(name) : null,
               child: const Text("Add"),
             ),
           ],

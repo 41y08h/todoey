@@ -10,6 +10,12 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task('Buy milk'),
+    Task('Buy eggs'),
+    Task('Buy bread'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +26,12 @@ class _TasksScreenState extends State<TasksScreen> {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            builder: (context) => const AddTaskScreen(),
+            builder: (context) => AddTaskScreen(onAdd: (taskName) {
+              setState(() {
+                tasks.add(Task(taskName));
+              });
+              Navigator.pop(context);
+            }),
             enableDrag: true,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -96,10 +107,17 @@ class _TasksScreenState extends State<TasksScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: TasksList(),
+                      padding: const EdgeInsets.all(16.0),
+                      child: TasksList(
+                        tasks: tasks,
+                        onItemUpdated: (int index, bool value) {
+                          setState(() {
+                            tasks[index].isDone = value;
+                          });
+                        },
+                      ),
                     ),
                   )
                 ],
