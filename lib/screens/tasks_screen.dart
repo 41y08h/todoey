@@ -19,7 +19,8 @@ class _TasksScreenState extends State<TasksScreen> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => AddTaskScreen(),
+            isScrollControlled: true,
+            builder: (context) => const AddTaskScreen(),
             enableDrag: true,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
