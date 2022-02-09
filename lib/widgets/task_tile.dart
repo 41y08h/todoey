@@ -4,16 +4,19 @@ class TaskTile extends StatelessWidget {
   final String name;
   final bool isDone;
   final Function(bool) onChange;
-  const TaskTile(
-      {Key? key,
-      required this.name,
-      this.isDone = true,
-      required this.onChange})
-      : super(key: key);
+  final Function() onDelete;
+  const TaskTile({
+    Key? key,
+    required this.name,
+    this.isDone = true,
+    required this.onChange,
+    required this.onDelete,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onLongPress: onDelete,
       title: Text(
         name,
         style: isDone

@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/providers/tasks_provider.dart';
 import 'package:todoey/widgets/task_tile.dart';
 
 class TasksList extends StatelessWidget {
-  final List<Task> tasks;
-  final Function(int, bool) onItemUpdated;
-  const TasksList({Key? key, required this.tasks, required this.onItemUpdated})
-      : super(key: key);
+  const TasksList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final tasks = context.watch<TasksProvider>().tasks;
+
     return ListView.builder(
       itemBuilder: (context, index) => TaskTile(
         name: tasks[index].name,
         isDone: tasks[index].isDone,
         onChange: (value) {
-          onItemUpdated(index, value);
+          context.read<TasksProvider>().updateTask(index, value);
+        },
+        onDelete: () {
+          context.read<TasksProvider>().removeTask(index);
         },
       ),
       itemCount: tasks.length,
     );
   }
-}
-
-class Task {
-  final String name;
-  bool isDone;
-
-  Task(this.name, {this.isDone = false});
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/add_task_screen.dart';
 import 'package:todoey/widgets/tasks_list.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/providers/tasks_provider.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -10,12 +12,6 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task('Buy milk'),
-    Task('Buy eggs'),
-    Task('Buy bread'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +23,7 @@ class _TasksScreenState extends State<TasksScreen> {
             context: context,
             isScrollControlled: true,
             builder: (context) => AddTaskScreen(onAdd: (taskName) {
-              setState(() {
-                tasks.add(Task(taskName));
-              });
+              context.read<TasksProvider>().addTask(taskName);
               Navigator.pop(context);
             }),
             enableDrag: true,
@@ -73,9 +67,9 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 const SizedBox(height: 2),
-                const Text(
-                  '12 Tasks',
-                  style: TextStyle(
+                Text(
+                  '${context.watch<TasksProvider>().tasks.length} Tasks',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
@@ -107,17 +101,10 @@ class _TasksScreenState extends State<TasksScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TasksList(
-                        tasks: tasks,
-                        onItemUpdated: (int index, bool value) {
-                          setState(() {
-                            tasks[index].isDone = value;
-                          });
-                        },
-                      ),
+                      padding: EdgeInsets.all(16.0),
+                      child: TasksList(),
                     ),
                   )
                 ],
